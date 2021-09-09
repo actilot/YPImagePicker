@@ -227,6 +227,12 @@ public struct YPConfigLibrary {
     
     /// Set the overlay type shown on top of the selected library item
     public var itemOverlayType: YPItemOverlayType = .grid
+  
+    /// Set this to false if you want to prohibit changing of album other than the default one. Defaults to true.
+    public var shouldBeAbleToChangeAlbum: Bool = true
+  
+    /// Set this to false if you want to hide Max Limit Warning. Defaults to true.
+    public var shouldShowMaxLimitWarning: Bool = true
 }
 
 /// Encapsulates video specific settings.

@@ -118,6 +118,8 @@ internal class YPLibraryVC: UIViewController, YPPermissionCheckable {
 
             strongSelf.updateCropInfo()
         }
+        
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     public override func viewDidAppear(_ animated: Bool) {

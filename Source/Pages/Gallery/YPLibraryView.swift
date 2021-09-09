@@ -17,7 +17,10 @@ final class YPLibraryView: UIView {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var assetZoomableView: YPAssetZoomableView!
     @IBOutlet weak var assetViewContainer: YPAssetViewContainer!
+    @IBOutlet weak var multipleSelectionLabelView: UIView!
+    @IBOutlet weak var multipleSelectionLabel: UILabel!
     @IBOutlet weak var assetViewContainerConstraintTop: NSLayoutConstraint!
+    @IBOutlet weak var multipleSelectionLabelViewHeight: NSLayoutConstraint!
     
     let maxNumberWarningView = UIView()
     let maxNumberWarningLabel = UILabel()
@@ -47,9 +50,11 @@ final class YPLibraryView: UIView {
         )
         
         line.backgroundColor = .ypSystemBackground
+        line.isHidden = true
         
         setupMaxNumberOfItemsView()
         setupProgressBarView()
+        setupMultipleSelectionLabel()
     }
     
     /// At the bottom there is a view that is visible when selected a limit of items with multiple selection
@@ -91,6 +96,16 @@ final class YPLibraryView: UIView {
         progressView.progressTintColor = YPConfig.colors.progressBarCompletedColor ?? YPConfig.colors.tintColor
         progressView.isHidden = true
         progressView.isUserInteractionEnabled = false
+    }
+  
+    /// When video is processing this bar appears
+    func setupMultipleSelectionLabel() {
+      multipleSelectionLabelViewHeight.constant = YPConfig.library.defaultMultipleSelection ? 44 : 0
+      
+      multipleSelectionLabel.text = YPConfig.wordings.multipleSelectionLabel
+      multipleSelectionLabel.textColor = YPConfig.colors.tintColor
+      multipleSelectionLabel.font = YPConfig.fonts.multipleSelectionLabelFont
+      multipleSelectionLabelView.backgroundColor = YPConfig.colors.libraryScreenBackgroundColor
     }
 }
 
