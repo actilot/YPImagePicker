@@ -51,6 +51,12 @@ open class YPImagePicker: UINavigationController {
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         return YPImagePickerConfiguration.shared.preferredStatusBarStyle
     }
+    
+    open func update(with config: YPImagePickerConfiguration) {
+        YPImagePickerConfiguration.shared = config
+        
+        picker.setup()
+    }
 
     // MARK: - Private
 

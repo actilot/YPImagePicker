@@ -51,6 +51,41 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         
         delegate = self
         
+        setup()
+    }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        cameraVC?.v.shotButton.isEnabled = true
+        
+        updateMode(with: currentController)
+    }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        shouldHideStatusBar = true
+        initialStatusBarHidden = true
+        UIView.animate(withDuration: 0.3) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
+    internal func pagerScrollViewDidScroll(_ scrollView: UIScrollView) { }
+    
+    func modeFor(vc: UIViewController) -> Mode {
+        switch vc {
+        case is YPLibraryVC:
+            return .library
+        case is YPCameraVC:
+            return .camera
+        case is YPVideoCaptureVC:
+            return .video
+        default:
+            return .camera
+        }
+    }
+    
+    func setup() {
         // Force Library only when using `minNumberOfItems`.
         if YPConfig.library.minNumberOfItems > 1 {
             YPImagePickerConfiguration.shared.screens = [.library]
@@ -121,37 +156,6 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         
         YPHelper.changeBackButtonIcon(self)
         YPHelper.changeBackButtonTitle(self)
-    }
-    
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        cameraVC?.v.shotButton.isEnabled = true
-        
-        updateMode(with: currentController)
-    }
-    
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        shouldHideStatusBar = true
-        initialStatusBarHidden = true
-        UIView.animate(withDuration: 0.3) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
-    }
-    
-    internal func pagerScrollViewDidScroll(_ scrollView: UIScrollView) { }
-    
-    func modeFor(vc: UIViewController) -> Mode {
-        switch vc {
-        case is YPLibraryVC:
-            return .library
-        case is YPCameraVC:
-            return .camera
-        case is YPVideoCaptureVC:
-            return .video
-        default:
-            return .camera
-        }
     }
     
     func pagerDidSelectController(_ vc: UIViewController) {
